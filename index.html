@@ -1,304 +1,930 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Matthew & Brenda are having a baby</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Rye&family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --cream:#fffdf9;
-    --line:#c9c9c9;
-    --ink:#1a1a1a;
-    --gold:#8a6a1f;
-    --gold-bg:#fbf3e2;
-    --blush:#f0a9a5;
-    --sky:#a9c9e8;
-    --tan:#d9c3a0;
-    --card-bg:#e7e4dc;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--cream);
-    color:var(--ink);
-    font-family:'Playfair Display', serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
-  .divider{border:none;border-top:1px solid var(--line);margin:0;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Awaits | Baby Expedition Tracker</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Miltonian&family=Caveat:wght@600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
 
-  /* HERO */
-  .hero{padding:40px 32px;}
-  .hero-grid{max-width:1100px;margin:0 auto;}
-  .banner{width:100%;height:auto;display:block;}
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        expedition: {
+                            sand: '#F7F4EE',
+                            parchment: '#EFEAE1',
+                            navy: '#1B2A4A',
+                            navylight: '#2C3E66',
+                            sage: '#658354',
+                            sagelight: '#E3EADF',
+                            terracotta: '#C86D51',
+                            gold: '#D4A359',
+                            stampRed: '#A93226',
+                            stampBlue: '#1F618D',
+                            kraft: '#D8C3A5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        handwriting: ['"Caveat"', 'cursive'],
+                        mono: ['"Courier Prime"', 'monospace'],
+                        miltonian: ['"Miltonian"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
 
-  /* SECTION SPACING */
-  section{padding:56px 0;}
-  .center{text-align:center;}
+    <style>
+        /* Custom Styles for Map Patterns & Vintage Aesthetics */
+        body {
+            background-color: #F7F4EE;
+            background-image: 
+                radial-gradient(rgba(27, 42, 74, 0.04) 1px, transparent 0),
+                radial-gradient(rgba(200, 109, 81, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
 
-  /* TIMELINE */
-  .hearts-row{display:flex;justify-content:space-around;max-width:760px;margin:0 auto 34px;padding-top:0;}
-  .heart-hang{width:18px;height:18px;position:relative;}
-  .heart-hang::before{content:"";position:absolute;top:-22px;left:50%;width:1px;height:22px;background:var(--line);}
-  .heart-hang svg{width:18px;height:18px;fill:#f2d98b;}
+        .map-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.86 0 7-3.14 7-7s-3.14-7-7-7-7 3.14-7 7 3.14 7 7 7zm0 1c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm69 68c3.86 0 7-3.14 7-7s-3.14-7-7-7-7 3.14-7 7 3.14 7 7 7zm0 1c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zM38 46c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 1c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-9c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z' fill='%201b2a4a' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
 
-  .polaroids{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:22px;max-width:1000px;margin:0 auto;
-  }
-  .polaroid{
-    background:var(--card-bg);padding:10px 10px 14px;border-radius:2px;
-    box-shadow:0 6px 14px rgba(0,0,0,.08);
-  }
-  .polaroid .photo{
-    background:#111;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
-    color:#888;font-family:'Playfair Display';font-size:.75rem;font-style:italic;
-    border:1px solid #333;
-  }
-  .polaroid .photo.route{
-    background:#fdfdfb;border:1px solid #ddd;color:var(--ink);position:relative;
-  }
-  .route svg{width:70%;height:70%;}
-  .caption{
-    display:flex;align-items:center;justify-content:space-between;
-    font-family:'Mrs Saint Delafield', cursive;font-weight:400;font-size:1.6rem;margin-top:8px;
-  }
-  .caption svg{width:18px;height:18px;fill:none;stroke:var(--ink);stroke-width:1.6;}
+        .ticket-cutout-left, .ticket-cutout-right {
+            position: absolute;
+            top: 50%;
+            width: 24px;
+            height: 24px;
+            background-color: #F7F4EE;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        .ticket-cutout-left { left: -12px; }
+        .ticket-cutout-right { right: -12px; }
 
-  /* REGISTRY */
-  .registry-row{display:flex;align-items:center;justify-content:center;gap:36px;flex-wrap:wrap;}
-  .registry-text h2{
-    font-family:'Mrs Saint Delafield', cursive;font-size:3.6rem;margin:0 0 10px;font-weight:400;
-  }
-  .registry-text p{font-size:1.3rem;margin:0;font-family:'Caveat', cursive;font-weight:500;}
-  .registry-text a{color:var(--ink);}
-  .balloons{width:110px;height:auto;}
+        /* Passport Stamp Effect */
+        .passport-stamp {
+            display: inline-block;
+            padding: 8px 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 8px;
+            position: relative;
+            transform: rotate(-4deg);
+            box-shadow: 0 0 0 2px currentColor;
+            opacity: 0.9;
+            mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 100%);
+        }
 
-  /* GENDER VOTE */
-  .vote-card{
-    max-width:520px;margin:0 auto;background:var(--gold-bg);border:1px solid #b89a4e;
-    border-radius:10px;padding:42px 40px;text-align:center;
-  }
-  .vote-card h3{
-    font-family:'Rye', serif;font-weight:400;color:var(--gold);
-    font-size:1.5rem;margin:0 0 26px;letter-spacing:.5px;
-  }
-  .vote-option{
-    display:block;width:100%;text-align:left;padding:14px 18px;margin-bottom:14px;
-    background:#e9e2d3;border:1px solid #cdbf9c;border-radius:6px;
-    font-family:'Rye', serif;font-size:1rem;color:#6b5b33;
-    cursor:pointer;transition:background .15s ease;
-  }
-  .vote-option input{margin-right:10px;accent-color:#8a6a1f;}
-  .vote-option:hover{background:#e2d8c1;}
-  .live-count{float:right;font-family:'Playfair Display';font-size:.85rem;color:#a08a55;}
-  .vote-option input:disabled{accent-color:#c9bfa0;}
-  .vote-option.disabled{opacity:.7;cursor:default;}
-  .vote-btn{
-    width:100%;padding:14px;margin-top:4px;border:none;border-radius:24px;
-    background:#d29a76;color:#fff;font-family:'Rye',serif;font-size:1rem;font-weight:400;
-    cursor:pointer;letter-spacing:.5px;
-  }
-  .vote-btn:hover{background:#c78a63;}
-  .vote-note{font-size:.75rem;color:#8a7a55;margin-top:10px;font-family:'Playfair Display';}
-  .tally{margin-top:18px;font-family:'Caveat',cursive;font-size:1.15rem;color:#6b5b33;}
+        .polaroid-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
 
-  footer{padding:30px 0 50px;text-align:center;font-size:.8rem;color:#999;}
+        /* Dotted Flight Path */
+        .flight-path-line {
+            background-image: linear-gradient(to right, #1B2A4A 50%, rgba(255,255,255,0) 0%);
+            background-position: bottom;
+            background-size: 14px 2px;
+            background-repeat: repeat-x;
+        }
 
-  /* COUNTDOWN */
-  .countdown{text-align:center;}
-  .countdown .due{
-    font-family:'Caveat', cursive;font-size:1.1rem;color:#6b5b33;margin:0 0 14px;
-  }
-  .progress-track{
-    max-width:520px;margin:0 auto;height:22px;border-radius:20px;
-    background:#e9e2d3;border:1px solid #cdbf9c;overflow:hidden;
-  }
-  .progress-fill{
-    height:100%;border-radius:20px 0 0 20px;
-    background:linear-gradient(90deg, var(--tan), var(--blush));
-    width:0%;transition:width .6s ease;
-  }
-  .countdown .weeks{
-    font-family:'Rye', serif;font-size:1.3rem;color:var(--gold);margin:16px 0 0;
-    letter-spacing:.5px;
-  }
+        /* Split Flap Board Styling for Nav */
+        .split-flap {
+            background: #1B2A4A;
+            color: #F7F4EE;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
 
-  @media (max-width:720px){
-    .polaroids{grid-template-columns:1fr 1fr;}
-    .registry-row{flex-direction:column;}
-  }
-</style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #EFEAE1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1B2A4A;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body>
+<body class="font-sans text-expedition-navy antialiased min-h-screen flex flex-col map-bg selection:bg-expedition-terracotta selection:text-white">
 
-  <section class="hero">
-    <div class="hero-grid">
-      <img class="banner" src="havingababybanner.jpg" alt="Matthew & Brenda are having a baby">
-    </div>
-  </section>
+    <!-- Navigation / Terminal Header -->
+    <header class="sticky top-0 z-50 bg-expedition-navy text-white shadow-lg border-b-2 border-expedition-gold">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
+            <a href="#hero" class="flex items-center space-x-3 group">
+                <div class="w-9 h-9 rounded-full bg-expedition-terracotta flex items-center justify-center text-white transform group-hover:rotate-45 transition-transform duration-300">
+                    <i class="fa-solid fa-plane text-sm"></i>
+                </div>
+                <div>
+                    <span class="font-serif font-bold text-lg tracking-wide block leading-none">FLIGHT #BABY-2026</span>
+                    <span class="font-mono text-xs text-expedition-gold tracking-widest uppercase">EXPEDITION PARENTHOOD</span>
+                </div>
+            </a>
 
-  <section class="countdown">
-    <div class="wrap">
-      <p class="due" id="dueDateText"></p>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <p class="weeks" id="weeksText"></p>
-    </div>
-  </section>
+            <!-- Terminal Style Nav Links -->
+            <nav class="hidden md:flex items-center space-x-1 text-xs font-mono">
+                <a href="#boarding-pass" class="px-3 py-1.5 rounded hover:bg-expedition-navylight transition-colors uppercase"><i class="fa-solid fa-ticket mr-1.5 text-expedition-gold"></i>Boarding Pass</a>
+                <a href="#progress" class="px-3 py-1.5 rounded hover:bg-expedition-navylight transition-colors uppercase"><i class="fa-solid fa-route mr-1.5 text-expedition-gold"></i>Flight Tracker</a>
+                <a href="#poll" class="px-3 py-1.5 rounded hover:bg-expedition-navylight transition-colors uppercase"><i class="fa-solid fa-vote-yea mr-1.5 text-expedition-gold"></i>Predictions</a>
+                <a href="#gallery" class="px-3 py-1.5 rounded hover:bg-expedition-navylight transition-colors uppercase"><i class="fa-solid fa-camera-retro mr-1.5 text-expedition-gold"></i>Sightseeing Logs</a>
+                <a href="#registry" class="px-3 py-1.5 rounded hover:bg-expedition-navylight transition-colors uppercase"><i class="fa-solid fa-suitcase mr-1.5 text-expedition-gold"></i>Gear Checklist</a>
+                <a href="#guestbook" class="px-3 py-1.5 bg-expedition-terracotta hover:bg-opacity-90 text-white rounded transition-colors uppercase font-bold"><i class="fa-solid fa-passport mr-1.5"></i>Guestbook</a>
+            </nav>
 
-  <hr class="divider">
-
-  <section>
-    <div class="wrap">
-      <div class="hearts-row">
-        <span class="heart-hang"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11.2C4 6 6.6 4 9.4 4 11 4 12 5 12 5s1-1 2.6-1C17.4 4 20 6 20 9.8 20 15.8 12 21 12 21z"/></svg></span>
-        <span class="heart-hang"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11.2C4 6 6.6 4 9.4 4 11 4 12 5 12 5s1-1 2.6-1C17.4 4 20 6 20 9.8 20 15.8 12 21 12 21z"/></svg></span>
-        <span class="heart-hang"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11.2C4 6 6.6 4 9.4 4 11 4 12 5 12 5s1-1 2.6-1C17.4 4 20 6 20 9.8 20 15.8 12 21 12 21z"/></svg></span>
-        <span class="heart-hang"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11.2C4 6 6.6 4 9.4 4 11 4 12 5 12 5s1-1 2.6-1C17.4 4 20 6 20 9.8 20 15.8 12 21 12 21z"/></svg></span>
-      </div>
-
-      <div class="polaroids">
-        <div class="polaroid">
-          <div class="photo">ultrasound photo</div>
-          <div class="caption">8 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
+            <!-- Mobile menu trigger -->
+            <button id="mobile-menu-btn" class="md:hidden text-expedition-sand focus:outline-none p-1">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
         </div>
-        <div class="polaroid">
-          <div class="photo route">
-            <svg viewBox="0 0 120 120"><path d="M15 90c25-40 55 5 30 25" stroke="#111" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/><path d="M45 115l6-3-1 7z" fill="#111"/><circle cx="60" cy="60" r="34" fill="none" stroke="#111" stroke-width="1"/><text x="60" y="64" font-family="Rye" font-size="11" text-anchor="middle" fill="#111">En Route</text></svg>
-          </div>
-          <div class="caption">12 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-expedition-navylight border-t border-slate-700 px-4 py-3 space-y-2 text-sm font-mono">
+            <a href="#boarding-pass" class="mobile-link block py-2 border-b border-slate-700/50"><i class="fa-solid fa-ticket w-6 text-expedition-gold"></i> Boarding Pass</a>
+            <a href="#progress" class="mobile-link block py-2 border-b border-slate-700/50"><i class="fa-solid fa-route w-6 text-expedition-gold"></i> Flight Tracker</a>
+            <a href="#poll" class="mobile-link block py-2 border-b border-slate-700/50"><i class="fa-solid fa-vote-yea w-6 text-expedition-gold"></i> Departure Poll</a>
+            <a href="#gallery" class="mobile-link block py-2 border-b border-slate-700/50"><i class="fa-solid fa-camera-retro w-6 text-expedition-gold"></i> Sightseeing Logs</a>
+            <a href="#registry" class="mobile-link block py-2 border-b border-slate-700/50"><i class="fa-solid fa-suitcase w-6 text-expedition-gold"></i> Gear Checklist</a>
+            <a href="#guestbook" class="mobile-link block py-2 text-expedition-gold font-bold"><i class="fa-solid fa-passport w-6"></i> Passport Guestbook</a>
         </div>
-        <div class="polaroid">
-          <div class="photo route">
-            <svg viewBox="0 0 120 120"><path d="M15 90c25-40 55 5 30 25" stroke="#111" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/><path d="M45 115l6-3-1 7z" fill="#111"/><circle cx="60" cy="60" r="34" fill="none" stroke="#111" stroke-width="1"/><text x="60" y="64" font-family="Rye" font-size="11" text-anchor="middle" fill="#111">En Route</text></svg>
-          </div>
-          <div class="caption">16 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
+    </header>
+
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8 space-y-12">
+
+        <!-- SECTION 1: BOARDING PASS HERO HEADER -->
+        <section id="boarding-pass" class="scroll-mt-20">
+            <div class="text-center mb-6">
+                <span class="inline-block px-3 py-1 rounded-full bg-expedition-sagelight text-expedition-sage font-mono text-xs tracking-widest uppercase font-semibold mb-2">
+                    <i class="fa-solid fa-compass mr-1 animate-spin" style="animation-duration: 12s;"></i> Expedition Announcement
+                </span>
+                <h1 class="font-miltonian text-sm sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal text-expedition-navy tracking-wide leading-tight whitespace-nowrap">
+                    Matthew & Brenda are having a baby!
+                </h1>
+                <p class="font-handwriting text-2xl text-expedition-terracotta mt-2">Adventure awaits as our little co-pilot prepares for takeoff.</p>
+            </div>
+
+            <!-- Boarding Pass Ticket Container -->
+            <div class="relative bg-white rounded-2xl shadow-xl border-2 border-expedition-kraft overflow-hidden max-w-4xl mx-auto">
+                
+                <!-- Ticket Header Strip -->
+                <div class="bg-expedition-navy text-white px-6 py-3 flex justify-between items-center border-b-2 border-expedition-gold">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-plane-departure text-expedition-gold text-lg"></i>
+                        <span class="font-mono font-bold text-sm tracking-wider uppercase">Boarding Pass / Priority Clearance</span>
+                    </div>
+                    <div class="hidden sm:block font-mono text-xs text-expedition-gold">
+                        FIRST CLASS CARGO
+                    </div>
+                </div>
+
+                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center relative">
+                    
+                    <!-- Decorative Circle Cutouts for Ticket Effect -->
+                    <div class="hidden md:block ticket-cutout-left border-r-2 border-expedition-kraft"></div>
+                    <div class="hidden md:block ticket-cutout-right border-l-2 border-expedition-kraft"></div>
+
+                    <!-- Main Ticket Details (8 cols) -->
+                    <div class="md:col-span-8 space-y-6 md:border-r-2 md:border-dashed md:border-slate-300 md:pr-6">
+                        
+                        <!-- Flight Route Header -->
+                        <div class="flex items-center justify-between bg-expedition-sand p-4 rounded-xl border border-expedition-parchment">
+                            <div class="text-center sm:text-left">
+                                <p class="font-mono text-xs text-slate-500 uppercase">Origin</p>
+                                <p class="font-serif font-bold text-xl text-expedition-navy">Matthew & Brenda</p>
+                                <p class="font-mono text-xs text-expedition-terracotta">STATION: TWO</p>
+                            </div>
+                            <div class="flex flex-col items-center px-2">
+                                <span class="font-mono text-[10px] text-slate-400 mb-1">40 WEEKS DURATION</span>
+                                <div class="flex items-center space-x-1 text-expedition-gold">
+                                    <span class="w-8 h-0.5 bg-expedition-gold"></span>
+                                    <i class="fa-solid fa-plane text-base transform rotate-90"></i>
+                                    <span class="w-8 h-0.5 bg-expedition-gold"></span>
+                                </div>
+                                <span class="font-handwriting text-sm text-expedition-sage mt-1 font-bold">Non-Stop Journey</span>
+                            </div>
+                            <div class="text-center sm:text-right">
+                                <p class="font-mono text-xs text-slate-500 uppercase">Destination</p>
+                                <p class="font-serif font-bold text-xl text-expedition-navy">Parenthood</p>
+                                <p class="font-mono text-xs text-expedition-sage">STATION: THREE</p>
+                            </div>
+                        </div>
+
+                        <!-- Details Grid with Due Date April 1, 2027 -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-xs">
+                            <div>
+                                <span class="text-slate-400 block uppercase text-[10px]">PASSENGER NAME</span>
+                                <span class="font-bold text-expedition-navy text-sm block truncate" id="ticket-passenger-name">Baby [LastName]</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block uppercase text-[10px]">FLIGHT NO.</span>
+                                <span class="font-bold text-expedition-navy text-sm block">#BABY-2027</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block uppercase text-[10px]">DEPARTURE</span>
+                                <span class="font-bold text-expedition-navy text-sm block" id="ticket-departure-date">Jun 25, 2026</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block uppercase text-[10px]">EST. TOUCHDOWN</span>
+                                <span class="font-bold text-expedition-terracotta text-sm block" id="ticket-due-date">Apr 01, 2027</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 font-mono text-xs">
+                            <div>
+                                <span class="text-slate-400 block text-[10px]">GATE</span>
+                                <span class="font-bold text-slate-800">NURSERY A</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block text-[10px]">SEAT</span>
+                                <span class="font-bold text-slate-800">CRIB 01</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block text-[10px]">CLASS</span>
+                                <span class="font-bold text-expedition-sage">VIP / CO-PILOT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ticket Stub / Barcode (4 cols) -->
+                    <div class="md:col-span-4 flex flex-col items-center justify-between h-full bg-expedition-sand md:bg-transparent p-4 md:p-0 rounded-xl md:rounded-none border md:border-none border-expedition-kraft">
+                        <div class="text-center w-full">
+                            <div class="passport-stamp text-expedition-stampRed border-expedition-stampRed text-xs mb-3 font-mono tracking-widest">
+                                <i class="fa-solid fa-stamp mr-1"></i> APPROVED FOR TAKEOFF
+                            </div>
+                            <p class="font-serif font-bold text-lg text-expedition-navy">Flight Boarding Pass</p>
+                            <p class="font-handwriting text-slate-600 text-base">Keep hand baggage light!</p>
+                        </div>
+
+                        <!-- Barcode Simulation -->
+                        <div class="w-full my-4 flex flex-col items-center">
+                            <div class="h-12 w-full bg-slate-800 rounded flex items-center justify-around px-2 space-x-1 opacity-80" title="Scan for Love">
+                                <div class="w-1 h-10 bg-white"></div>
+                                <div class="w-2 h-10 bg-white"></div>
+                                <div class="w-0.5 h-10 bg-white"></div>
+                                <div class="w-3 h-10 bg-white"></div>
+                                <div class="w-1 h-10 bg-white"></div>
+                                <div class="w-2 h-10 bg-white"></div>
+                                <div class="w-0.5 h-10 bg-white"></div>
+                                <div class="w-1.5 h-10 bg-white"></div>
+                                <div class="w-2 h-10 bg-white"></div>
+                                <div class="w-1 h-10 bg-white"></div>
+                                <div class="w-3 h-10 bg-white"></div>
+                                <div class="w-1 h-10 bg-white"></div>
+                            </div>
+                            <span class="font-mono text-[9px] text-slate-400 mt-1 tracking-widest">0000-2027-BABY-EXPEDITION</span>
+                        </div>
+
+                        <div class="text-center">
+                            <span class="text-[10px] font-mono text-slate-500 uppercase">STATUS: </span>
+                            <span class="text-xs font-mono font-bold text-expedition-sage">EN ROUTE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: FLIGHT PROGRESS TRACKER (NO SLIDER) -->
+        <section id="progress" class="scroll-mt-20 bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-expedition-parchment">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <h2 class="font-serif text-2xl font-bold text-expedition-navy flex items-center">
+                        <i class="fa-solid fa-route text-expedition-terracotta mr-2 text-xl"></i> Flight Progress Tracker
+                    </h2>
+                    <p class="text-slate-600 text-sm">Tracking the expedition route live towards April 1, 2027.</p>
+                </div>
+                
+                <!-- Percentage Pill Badge -->
+                <div class="mt-4 md:mt-0 inline-flex items-center px-4 py-2 rounded-full bg-expedition-navy text-white font-mono text-xs font-bold tracking-wider shadow">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-ping mr-2"></span>
+                    <span id="flight-status-text">FLIGHT STATUS: CALCULATING...</span>
+                </div>
+            </div>
+
+            <!-- Map Animation & Path Area -->
+            <div class="relative bg-expedition-sand rounded-xl p-6 border border-expedition-kraft my-4 overflow-hidden">
+                <!-- Flight Path Graphic -->
+                <div class="relative h-20 flex items-center px-4">
+                    <!-- Base Dotted Flight Path -->
+                    <div class="absolute left-8 right-8 top-1/2 -translate-y-1/2 border-b-2 border-dashed border-slate-300"></div>
+                    
+                    <!-- Completed Path Line -->
+                    <div id="progress-line" class="absolute left-8 top-1/2 -translate-y-1/2 border-b-2 border-expedition-terracotta transition-all duration-500" style="width: 0%;"></div>
+
+                    <!-- Start Point -->
+                    <div class="absolute left-6 top-1/2 -translate-y-1/2 flex flex-col items-center">
+                        <div class="w-7 h-7 rounded-full bg-expedition-navy text-white text-xs flex items-center justify-center font-mono font-bold shadow">W1</div>
+                        <span class="text-[10px] font-mono text-slate-500 mt-1">Takeoff</span>
+                    </div>
+
+                    <!-- Plane Marker (Dynamic) -->
+                    <div id="plane-marker" class="absolute top-1/2 -translate-y-1/2 -ml-4 transition-all duration-500 z-10" style="left: 6%;">
+                        <div class="w-10 h-10 rounded-full bg-expedition-terracotta text-white flex items-center justify-center shadow-lg transform -rotate-12">
+                            <i class="fa-solid fa-plane text-lg"></i>
+                        </div>
+                    </div>
+
+                    <!-- Destination Point -->
+                    <div class="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col items-center">
+                        <div class="w-7 h-7 rounded-full bg-expedition-gold text-white text-xs flex items-center justify-center font-mono font-bold shadow"><i class="fa-solid fa-flag-checkered"></i></div>
+                        <span class="text-[10px] font-mono text-slate-500 mt-1">Apr 01, 2027</span>
+                    </div>
+                </div>
+
+                <!-- Cargo / Size Feature Bar -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 pt-4 border-t border-expedition-parchment">
+                    <div class="bg-white p-3 rounded-lg border border-slate-200 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-weight-hanging"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400 uppercase block">Current Cargo Size</span>
+                            <span id="cargo-size-display" class="font-serif font-bold text-expedition-navy text-base">Calculating...</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-slate-200 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-ruler-vertical"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400 uppercase block">Est. Length & Weight</span>
+                            <span id="cargo-stats-display" class="font-mono font-bold text-slate-700 text-xs">--</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-slate-200 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-sky-100 text-sky-800 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400 uppercase block">Days Remaining</span>
+                            <span id="days-remaining-display" class="font-mono font-bold text-expedition-terracotta text-sm">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: BOY OR GIRL PREDICTION POLL -->
+        <section id="poll" class="scroll-mt-20 bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-expedition-parchment">
+            <div class="text-center max-w-xl mx-auto mb-6">
+                <span class="font-mono text-xs text-expedition-terracotta uppercase font-bold tracking-widest block mb-1">Co-Pilot Predictions</span>
+                <h2 class="font-serif text-3xl font-bold text-expedition-navy">Is it a Boy or a Girl?</h2>
+                <p class="text-slate-600 text-sm mt-1">Place your bet for Matthew & Brenda's upcoming arrival!</p>
+            </div>
+
+            <!-- Vote Buttons Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-6">
+                <button id="vote-boy-btn" class="p-5 rounded-xl border-2 border-slate-200 hover:border-sky-500 bg-sky-50/50 hover:bg-sky-50 text-slate-800 transition-all flex items-center justify-between group shadow-sm">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-plane-arrival"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="font-serif font-bold text-base block group-hover:text-sky-600">Co-Pilot Boy</span>
+                            <span class="font-mono text-[11px] text-slate-500">Team Blue</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-sky-500 group-hover:translate-x-1 transition-all"></i>
+                </button>
+
+                <button id="vote-girl-btn" class="p-5 rounded-xl border-2 border-slate-200 hover:border-rose-400 bg-rose-50/50 hover:bg-rose-50 text-slate-800 transition-all flex items-center justify-between group shadow-sm">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-plane-arrival"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="font-serif font-bold text-base block group-hover:text-rose-600">Co-Pilot Girl</span>
+                            <span class="font-mono text-[11px] text-slate-500">Team Pink</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-rose-400 group-hover:translate-x-1 transition-all"></i>
+                </button>
+            </div>
+
+            <!-- Poll Visual Bar -->
+            <div class="max-w-xl mx-auto space-y-2">
+                <div class="flex justify-between text-xs font-mono font-bold text-slate-600">
+                    <span>Boy: <span id="boy-count">18</span> (<span id="boy-pct">56%</span>)</span>
+                    <span>Girl: <span id="girl-count">14</span> (<span id="girl-pct">44%</span>)</span>
+                </div>
+                <div class="w-full h-4 bg-slate-100 rounded-full overflow-hidden flex border border-slate-200">
+                    <div id="boy-bar" class="bg-sky-500 h-full transition-all duration-500" style="width: 56%;"></div>
+                    <div id="girl-bar" class="bg-rose-400 h-full transition-all duration-500" style="width: 44%;"></div>
+                </div>
+                <div id="vote-thanks-msg" class="hidden text-center text-xs font-mono font-bold text-expedition-sage mt-3">
+                    <i class="fa-solid fa-circle-check mr-1"></i> Passport Stamped! Thanks for voting.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: SONOGRAM SIGHTSEEING GALLERY (NO HOVER EFFECTS) -->
+        <section id="gallery" class="scroll-mt-20">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6">
+                <div>
+                    <span class="font-mono text-xs text-expedition-terracotta uppercase font-bold tracking-widest block mb-1">Visual Logbook</span>
+                    <h2 class="font-serif text-3xl font-bold text-expedition-navy">Sightseeing Logs (Sonograms)</h2>
+                    <p class="text-slate-600 text-sm">First sightings of Matthew & Brenda's little traveler.</p>
+                </div>
+                <div class="mt-2 sm:mt-0 font-handwriting text-xl text-expedition-sage">
+                    <i class="fa-solid fa-camera mr-1"></i> Snapshots of Growth
+                </div>
+            </div>
+
+            <!-- Polaroid Grid with Static Captions -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Polaroid Card 1 -->
+                <div class="bg-white p-4 pt-5 rounded-sm polaroid-shadow border border-slate-200">
+                    <div class="relative bg-slate-950 aspect-[4/3] rounded overflow-hidden flex items-center justify-center border border-slate-800">
+                        <img src="8weekultrasound.png" alt="Sonogram Scan 1" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=Upload+Sonogram+1';">
+                    </div>
+                    <div class="mt-4 text-center space-y-1">
+                        <p class="font-handwriting text-2xl text-slate-800">Stop #1: First Sightings</p>
+                        <p class="font-mono text-xs text-slate-400 uppercase">WEEK 8 • FIRST SCAN</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Card 2 -->
+                <div class="bg-white p-4 pt-5 rounded-sm polaroid-shadow border border-slate-200">
+                    <div class="relative bg-slate-950 aspect-[4/3] rounded overflow-hidden flex items-center justify-center border border-slate-800">
+                        <img src="YOUR_SONOGRAM_IMAGE_URL_HERE.jpg" alt="Sonogram Scan 2" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=Upload+Sonogram+2';">
+                    </div>
+                    <div class="mt-4 text-center space-y-1">
+                        <p class="font-handwriting text-2xl text-slate-800">Stop #2: The Wave</p>
+                        <p class="font-mono text-xs text-slate-400 uppercase">WEEK 13 • END OF T1</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Card 3 -->
+                <div class="bg-white p-4 pt-5 rounded-sm polaroid-shadow border border-slate-200">
+                    <div class="relative bg-slate-950 aspect-[4/3] rounded overflow-hidden flex items-center justify-center border border-slate-800">
+                        <img src="YOUR_SONOGRAM_IMAGE_URL_HERE.jpg" alt="Sonogram Scan 3" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=Upload+Sonogram+3';">
+                    </div>
+                    <div class="mt-4 text-center space-y-1">
+                        <p class="font-handwriting text-2xl text-slate-800">Stop #3: Halfway Mark</p>
+                        <p class="font-mono text-xs text-slate-400 uppercase">WEEK 20 • MID-WAY CHECKPOINT</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 5: REGISTRY LINKS ("EXPEDITION GEAR CHECKLIST") -->
+        <section id="registry" class="scroll-mt-20">
+            <div class="bg-expedition-navy text-white rounded-2xl p-6 sm:p-8 shadow-xl border-2 border-expedition-gold relative overflow-hidden">
+                <!-- Background Compass Overlay -->
+                <i class="fa-solid fa-compass absolute -right-12 -bottom-12 text-white/5 text-[220px] pointer-events-none"></i>
+
+                <div class="max-w-2xl">
+                    <span class="font-mono text-xs text-expedition-gold uppercase font-bold tracking-widest block mb-1">Supply Station</span>
+                    <h2 class="font-serif text-3xl font-bold text-white">Expedition Gear Checklist (Registries)</h2>
+                    <p class="text-slate-300 text-sm mt-1">If you'd like to help us pack for the voyage, we've registered for supplies at these stations:</p>
+                </div>
+
+                <!-- Registry Luggage Tags Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+                    
+                    <!-- Babylist Tag -->
+                    <a href="https://www.babylist.com" target="_blank" rel="noopener noreferrer" class="group bg-expedition-sand hover:bg-white text-expedition-navy p-5 rounded-xl transition-all duration-200 transform hover:-translate-y-1 shadow-md border-l-4 border-expedition-terracotta relative overflow-hidden block">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="font-mono text-[10px] text-slate-400 uppercase tracking-widest">TAG NO. 01</span>
+                            <i class="fa-solid fa-tag text-expedition-terracotta group-hover:rotate-45 transition-transform"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-expedition-terracotta transition-colors">Babylist Registry</h3>
+                        <p class="text-xs text-slate-500 mt-1">Universal supplies & nursery gear list.</p>
+                        <div class="mt-4 flex items-center text-xs font-mono font-bold text-expedition-navy group-hover:translate-x-1 transition-transform">
+                            Open Gear Station <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </div>
+                    </a>
+
+                    <!-- Target Tag -->
+                    <a href="https://www.target.com" target="_blank" rel="noopener noreferrer" class="group bg-expedition-sand hover:bg-white text-expedition-navy p-5 rounded-xl transition-all duration-200 transform hover:-translate-y-1 shadow-md border-l-4 border-rose-600 relative overflow-hidden block">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="font-mono text-[10px] text-slate-400 uppercase tracking-widest">TAG NO. 02</span>
+                            <i class="fa-solid fa-bullseye text-rose-600 group-hover:rotate-45 transition-transform"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-rose-600 transition-colors">Target Registry</h3>
+                        <p class="text-xs text-slate-500 mt-1">Clothing, diapers & travel accessories.</p>
+                        <div class="mt-4 flex items-center text-xs font-mono font-bold text-expedition-navy group-hover:translate-x-1 transition-transform">
+                            Open Gear Station <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </div>
+                    </a>
+
+                    <!-- Amazon Tag -->
+                    <a href="https://www.amazon.com" target="_blank" rel="noopener noreferrer" class="group bg-expedition-sand hover:bg-white text-expedition-navy p-5 rounded-xl transition-all duration-200 transform hover:-translate-y-1 shadow-md border-l-4 border-amber-500 relative overflow-hidden block">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="font-mono text-[10px] text-slate-400 uppercase tracking-widest">TAG NO. 03</span>
+                            <i class="fa-solid fa-box text-amber-500 group-hover:rotate-45 transition-transform"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-amber-600 transition-colors">Amazon Baby</h3>
+                        <p class="text-xs text-slate-500 mt-1">Strollers, car seats & quick essentials.</p>
+                        <div class="mt-4 flex items-center text-xs font-mono font-bold text-expedition-navy group-hover:translate-x-1 transition-transform">
+                            Open Gear Station <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: PASSPORT STAMP GUESTBOOK -->
+        <section id="guestbook" class="scroll-mt-20">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-expedition-parchment">
+                <div class="text-center max-w-xl mx-auto mb-8">
+                    <div class="w-12 h-12 rounded-full bg-expedition-sagelight text-expedition-sage flex items-center justify-center text-xl mx-auto mb-2">
+                        <i class="fa-solid fa-passport"></i>
+                    </div>
+                    <h2 class="font-serif text-3xl font-bold text-expedition-navy">Passport Guestbook</h2>
+                    <p class="text-slate-600 text-sm mt-1">Leave a message or advice for our journey! Each note receives an official stamped passport entry.</p>
+                </div>
+
+                <!-- Form & Recent Messages Container -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Form Column -->
+                    <form id="guestbook-form" class="lg:col-span-5 bg-expedition-sand p-6 rounded-xl border border-expedition-kraft space-y-4">
+                        <h3 class="font-serif font-bold text-lg text-expedition-navy flex items-center">
+                            <i class="fa-solid fa-pen-nib mr-2 text-expedition-terracotta"></i> Stamp Your Entry
+                        </h3>
+
+                        <div>
+                            <label for="gb-name" class="block font-mono text-xs text-slate-600 mb-1">TRAVELER / YOUR NAME *</label>
+                            <input type="text" id="gb-name" required placeholder="Aunt Sarah & Uncle Dave" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-expedition-terracotta text-sm">
+                        </div>
+
+                        <div>
+                            <label for="gb-location" class="block font-mono text-xs text-slate-600 mb-1">DEPARTING FROM (LOCATION)</label>
+                            <input type="text" id="gb-location" placeholder="Chicago, IL" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-expedition-terracotta text-sm">
+                        </div>
+
+                        <div>
+                            <label for="gb-message" class="block font-mono text-xs text-slate-600 mb-1">WELL WISHES / ADVICE *</label>
+                            <textarea id="gb-message" required rows="3" placeholder="Bon voyage into parenthood! Stock up on coffee..." class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-expedition-terracotta text-sm"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-expedition-navy hover:bg-expedition-navylight text-white font-mono text-xs font-bold uppercase rounded-lg transition-colors shadow-md flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-stamp text-expedition-gold"></i>
+                            <span>Stamp Passport</span>
+                        </button>
+                    </form>
+
+                    <!-- Stamp Notes Feed Column -->
+                    <div class="lg:col-span-7 space-y-4">
+                        <h3 class="font-mono text-xs text-slate-400 uppercase tracking-widest font-bold">RECENT PASSPORT STAMPS</h3>
+                        
+                        <div id="guestbook-list" class="space-y-4 max-h-[480px] overflow-y-auto pr-2">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-expedition-navy text-slate-300 py-8 border-t-4 border-expedition-gold text-center text-xs font-mono">
+        <div class="max-w-4xl mx-auto px-4 space-y-3">
+            <div class="flex justify-center items-center space-x-2 text-expedition-gold">
+                <i class="fa-solid fa-compass text-lg"></i>
+                <span class="font-serif font-bold text-sm tracking-wider">EXPEDITION PARENTHOOD 2026</span>
+            </div>
+            <p class="text-slate-400">Created with love for family & friends • Adventure awaits!</p>
+            <p class="text-[10px] text-slate-500">Flight Status Updated Daily • Non-Stop Service</p>
         </div>
-        <div class="polaroid">
-          <div class="photo route">
-            <svg viewBox="0 0 120 120"><path d="M15 90c25-40 55 5 30 25" stroke="#111" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/><path d="M45 115l6-3-1 7z" fill="#111"/><circle cx="60" cy="60" r="34" fill="none" stroke="#111" stroke-width="1"/><text x="60" y="64" font-family="Rye" font-size="11" text-anchor="middle" fill="#111">En Route</text></svg>
-          </div>
-          <div class="caption">20 Weeks <svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-8 11z"/></svg></div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <hr class="divider">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInAnonymously, 
+            signInWithCustomToken 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            collection, 
+            onSnapshot, 
+            addDoc, 
+            increment,
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-  <section>
-    <div class="wrap registry-row">
-      <div class="registry-text">
-        <h2>Registry</h2>
-        <p>Head to <a href="#" target="_blank" rel="noopener">Zola Baby</a> to purchase gifts.</p>
-      </div>
-      <svg class="balloons" viewBox="0 0 120 200" fill="none">
-        <ellipse cx="45" cy="45" rx="34" ry="40" fill="#f0a9a5"/>
-        <path d="M45 85l-4 20" stroke="#d9c3a0" stroke-width="1.5"/>
-        <ellipse cx="80" cy="35" rx="26" ry="30" fill="#a9c9e8"/>
-        <path d="M80 65l4 20" stroke="#d9c3a0" stroke-width="1.5"/>
-        <path d="M41 105c6 10-6 14 0 24s-6 14 2 26" stroke="#d9c3a0" stroke-width="1.5" fill="none"/>
-        <path d="M84 85c6 10-6 14 0 24s-6 14 2 26" stroke="#d9c3a0" stroke-width="1.5" fill="none"/>
-      </svg>
-    </div>
-  </section>
+        const userProvidedConfig = {
+            apiKey: "AIzaSyC6Wzdpm9wKfjTroLa7yyUnshGcx1v_SIU",
+            authDomain: "voteforbaby.firebaseapp.com",
+            projectId: "voteforbaby",
+            storageBucket: "voteforbaby.firebasestorage.app",
+            messagingSenderId: "315841266646",
+            appId: "1:315841266646:web:0373bcef1eb8b96bac1a77",
+            measurementId: "G-6C0G1XTDQW"
+        };
 
-  <hr class="divider">
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : userProvidedConfig;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'voteforbaby';
 
-  <section>
-    <div class="wrap">
-      <div class="vote-card">
-        <h3>Guess the Baby's Gender!</h3>
-        <form id="voteForm">
-          <label class="vote-option"><input type="radio" name="guess" value="boy" required>Boy <span class="live-count" id="boyCount">–</span></label>
-          <label class="vote-option"><input type="radio" name="guess" value="girl">Girl <span class="live-count" id="girlCount">–</span></label>
-          <button type="submit" class="vote-btn" id="voteBtn">Vote</button>
-        </form>
-        <p class="vote-note" id="voteNote">Results update live for everyone</p>
-      </div>
-    </div>
-  </section>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-  <footer>Matthew &amp; Brenda are having a baby 💙🤍</footer>
+        let currentUser = null;
 
-<script>
-  // Pregnancy countdown — auto-calculates from today's date, no manual updates needed
-  const DUE_DATE = new Date('2027-04-01T00:00:00');
-  const TOTAL_DAYS = 280; // standard 40-week pregnancy
+        const cargoData = {
+            1: { name: "Poppy Seed", stats: "~0.1 in / < 0.01 oz" },
+            4: { name: "Sesame Seed", stats: "~0.14 in / < 0.04 oz" },
+            8: { name: "Raspberry", stats: "~0.6 in / 0.04 oz" },
+            12: { name: "Plum", stats: "~2.1 in / 0.5 oz" },
+            16: { name: "Avocado", stats: "~4.6 in / 3.5 oz" },
+            20: { name: "Banana", stats: "~10 in / 10.6 oz" },
+            24: { name: "Cantaloupe", stats: "~11.8 in / 1.3 lbs" },
+            28: { name: "Eggplant", stats: "~14.8 in / 2.2 lbs" },
+            32: { name: "Squash", stats: "~16.7 in / 3.8 lbs" },
+            36: { name: "Honeydew Melon", stats: "~18.6 in / 5.8 lbs" },
+            40: { name: "Watermelon!", stats: "~20.2 in / 7.5 lbs" }
+        };
 
-  const today = new Date();
-  const msPerDay = 86400000;
-  let daysPregnant = TOTAL_DAYS - Math.ceil((DUE_DATE - today) / msPerDay);
-  daysPregnant = Math.max(0, Math.min(TOTAL_DAYS, daysPregnant));
+        let pollState = {
+            boy: 0,
+            girl: 0,
+            voted: false
+        };
 
-  const weeks = Math.floor(daysPregnant / 7);
-  const days = daysPregnant % 7;
-  const percent = (daysPregnant / TOTAL_DAYS) * 100;
+        async function startApp() {
+            initMobileNav();
+            calculateDueProgress();
 
-  document.getElementById('progressFill').style.width = percent + '%';
-  document.getElementById('weeksText').textContent =
-    daysPregnant >= TOTAL_DAYS ? "Baby's here any day now! 🎉" : `${weeks}w ${days}d pregnant`;
-  document.getElementById('dueDateText').textContent =
-    'Due Date: ' + DUE_DATE.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-</script>
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    const userCred = await signInWithCustomToken(auth, __initial_auth_token);
+                    currentUser = userCred.user;
+                } else {
+                    const userCred = await signInAnonymously(auth);
+                    currentUser = userCred.user;
+                }
+            } catch (err) {
+                console.error("Firebase auth error:", err);
+            }
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-  import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+            if (currentUser) {
+                initPollSync();
+                initGuestbookSync();
+            } else {
+                initPollFallback();
+            }
+        }
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyC6Wzdpm9wKfjTroLa7yyUnshGcx1v_SIU",
-    authDomain: "voteforbaby.firebaseapp.com",
-    databaseURL: "https://voteforbaby-default-rtdb.firebaseio.com/",
-    projectId: "voteforbaby"
-  };
+        document.addEventListener('DOMContentLoaded', startApp);
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const boyRef = ref(db, 'votes/boy');
-  const girlRef = ref(db, 'votes/girl');
+        // Mobile Nav Toggle
+        function initMobileNav() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const links = document.querySelectorAll('.mobile-link');
 
-  const form = document.getElementById('voteForm');
-  const voteBtn = document.getElementById('voteBtn');
-  const voteNote = document.getElementById('voteNote');
+            if (!btn || !menu) return;
 
-  // Live-update the counts for every visitor, in real time
-  onValue(boyRef, snap => {
-    document.getElementById('boyCount').textContent = snap.val() || 0;
-  });
-  onValue(girlRef, snap => {
-    document.getElementById('girlCount').textContent = snap.val() || 0;
-  });
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
 
-  // One vote per device/browser
-  const hasVoted = () => localStorage.getItem('babyVoteChoice');
-  function lockForm(choice){
-    form.querySelectorAll('input').forEach(i => i.disabled = true);
-    voteBtn.disabled = true;
-    voteBtn.textContent = 'Voted';
-    voteNote.textContent = choice
-      ? `You guessed ${choice === 'boy' ? 'Boy' : 'Girl'} — thanks for voting!`
-      : 'Results update live for everyone';
-  }
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        }
 
-  if (hasVoted()) lockForm(hasVoted());
+        // Calculate progress dynamically targeting April 1, 2027
+        function calculateDueProgress() {
+            const dueDate = new Date('2027-04-01T00:00:00');
+            const totalGestationDays = 280; // 40 weeks
+            const startDate = new Date(dueDate.getTime() - (totalGestationDays * 24 * 60 * 60 * 1000));
+            const now = new Date();
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    if (hasVoted()) return;
-    const choice = form.guess.value;
-    if (!choice) return;
-    const targetRef = choice === 'boy' ? boyRef : girlRef;
-    runTransaction(targetRef, current => (current || 0) + 1)
-      .then(() => {
-        localStorage.setItem('babyVoteChoice', choice);
-        lockForm(choice);
-      })
-      .catch(() => {
-        voteNote.textContent = "Couldn't submit your vote — try again.";
-      });
-  });
-</script>
+            const elapsedMs = now - startDate;
+            const elapsedDays = Math.max(0, Math.floor(elapsedMs / (1000 * 60 * 60 * 24)));
+            const remainingDays = Math.max(0, Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24)));
+
+            let week = Math.min(40, Math.max(1, Math.floor(elapsedDays / 7) + 1));
+            let pct = Math.min(100, Math.max(0, Math.round((elapsedDays / totalGestationDays) * 100)));
+
+            const statusText = document.getElementById('flight-status-text');
+            const progressLine = document.getElementById('progress-line');
+            const planeMarker = document.getElementById('plane-marker');
+
+            const cargoName = document.getElementById('cargo-size-display');
+            const cargoStats = document.getElementById('cargo-stats-display');
+            const daysRemainingDisplay = document.getElementById('days-remaining-display');
+
+            if (statusText) statusText.innerText = `FLIGHT STATUS: ${pct}% EN ROUTE (WEEK ${week})`;
+            if (progressLine) progressLine.style.width = `${pct}%`;
+            if (planeMarker) planeMarker.style.left = `calc(${pct * 0.84}% + 6%)`;
+
+            let selectedKey = 1;
+            const keys = Object.keys(cargoData).map(Number).sort((a,b)=>a-b);
+            for (let k of keys) {
+                if (week >= k) selectedKey = k;
+            }
+
+            const data = cargoData[selectedKey];
+            if (cargoName) cargoName.innerText = data.name;
+            if (cargoStats) cargoStats.innerText = data.stats;
+            if (daysRemainingDisplay) daysRemainingDisplay.innerText = remainingDays > 0 ? `~${remainingDays} Days to Touchdown` : "Touchdown Day!";
+        }
+
+        function updatePollDisplay() {
+            const boyBtn = document.getElementById('vote-boy-btn');
+            const girlBtn = document.getElementById('vote-girl-btn');
+            const boyCountEl = document.getElementById('boy-count');
+            const girlCountEl = document.getElementById('girl-count');
+            const boyPctEl = document.getElementById('boy-pct');
+            const girlPctEl = document.getElementById('girl-pct');
+            const boyBar = document.getElementById('boy-bar');
+            const girlBar = document.getElementById('girl-bar');
+            const thanksMsg = document.getElementById('vote-thanks-msg');
+
+            const total = pollState.boy + pollState.girl;
+            const boyPct = total > 0 ? Math.round((pollState.boy / total) * 100) : 50;
+            const girlPct = total > 0 ? (100 - boyPct) : 50;
+
+            if (boyCountEl) boyCountEl.innerText = pollState.boy;
+            if (girlCountEl) girlCountEl.innerText = pollState.girl;
+            if (boyPctEl) boyPctEl.innerText = `${boyPct}%`;
+            if (girlPctEl) girlPctEl.innerText = `${girlPct}%`;
+
+            if (boyBar) boyBar.style.width = `${boyPct}%`;
+            if (girlBar) girlBar.style.width = `${girlPct}%`;
+
+            if (pollState.voted) {
+                if (thanksMsg) thanksMsg.classList.remove('hidden');
+                if (boyBtn) boyBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                if (girlBtn) girlBtn.classList.add('opacity-80', 'cursor-not-allowed');
+            }
+        }
+
+        function initPollSync() {
+            const boyBtn = document.getElementById('vote-boy-btn');
+            const girlBtn = document.getElementById('vote-girl-btn');
+            if (!boyBtn || !girlBtn) return;
+
+            // Check if user already voted in this browser
+            if (localStorage.getItem('voted_gender')) {
+                pollState.voted = true;
+            }
+
+            // Realtime listener for poll counts
+            const pollDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'poll', 'totals');
+            onSnapshot(pollDocRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    pollState.boy = data.boy || 0;
+                    pollState.girl = data.girl || 0;
+                } else {
+                    // Seed initial starting document if empty
+                    setDoc(pollDocRef, { boy: 18, girl: 14 }, { merge: true });
+                    pollState.boy = 18;
+                    pollState.girl = 14;
+                }
+                updatePollDisplay();
+            }, (err) => {
+                console.error("Error loading poll:", err);
+            });
+
+            // Vote Handler
+            const castVote = async (gender) => {
+                if (pollState.voted || !currentUser) return;
+
+                pollState.voted = true;
+                localStorage.setItem('voted_gender', gender);
+                updatePollDisplay();
+
+                try {
+                    // Log individual vote
+                    const userVoteRef = doc(db, 'artifacts', appId, 'public', 'data', 'votes', currentUser.uid);
+                    await setDoc(userVoteRef, { gender, votedAt: serverTimestamp() }, { merge: true });
+
+                    // Increment aggregate poll counter
+                    await setDoc(pollDocRef, { [gender]: increment(1) }, { merge: true });
+                } catch (e) {
+                    console.error("Error saving vote:", e);
+                }
+            };
+
+            boyBtn.addEventListener('click', () => castVote('boy'));
+            girlBtn.addEventListener('click', () => castVote('girl'));
+        }
+
+        function initPollFallback() {
+            pollState.boy = 18;
+            pollState.girl = 14;
+            updatePollDisplay();
+        }
+
+        function initGuestbookSync() {
+            const form = document.getElementById('guestbook-form');
+            const list = document.getElementById('guestbook-list');
+
+            const stampBadges = [
+                { text: 'PASSED INSPECTION', class: 'border-expedition-stampRed text-expedition-stampRed' },
+                { text: 'PRIORITY BOARDING', class: 'border-expedition-stampBlue text-expedition-stampBlue' },
+                { text: 'APPROVED ENTRY', class: 'border-expedition-sage text-expedition-sage' },
+                { text: 'CO-PILOT APPROVED', class: 'border-expedition-gold text-expedition-gold' }
+            ];
+
+            // Realtime listener for guestbook messages
+            const guestbookColl = collection(db, 'artifacts', appId, 'public', 'data', 'guestbook');
+            onSnapshot(guestbookColl, (snapshot) => {
+                const entries = [];
+                snapshot.forEach(docSnap => {
+                    entries.push({ id: docSnap.id, ...docSnap.data() });
+                });
+
+                // Sort in memory by creation time (descending)
+                entries.sort((a, b) => {
+                    const tA = a.createdAt?.seconds || 0;
+                    const tB = b.createdAt?.seconds || 0;
+                    return tB - tA;
+                });
+
+                if (list) {
+                    list.innerHTML = '';
+                    entries.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = "bg-expedition-sand p-4 rounded-xl border border-expedition-kraft relative shadow-sm";
+                        card.innerHTML = `
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold font-serif text-slate-900 text-base">${escapeHTML(item.name || '')}</h4>
+                                    <p class="font-mono text-[10px] text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i> ${escapeHTML(item.location || 'Worldwide')}</p>
+                                </div>
+                                <span class="passport-stamp ${item.stampClass || 'border-expedition-sage text-expedition-sage'} text-[10px] py-0.5 px-2 bg-white">
+                                    ${escapeHTML(item.stampText || 'APPROVED ENTRY')}
+                                </span>
+                            </div>
+                            <p class="font-handwriting text-lg text-slate-700">"${escapeHTML(item.message || '')}"</p>
+                        `;
+                        list.appendChild(card);
+                    });
+                }
+            }, (err) => {
+                console.error("Guestbook snapshot error:", err);
+            });
+
+            // Submit new passport stamp
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!currentUser) return;
+
+                    const nameInput = document.getElementById('gb-name');
+                    const locInput = document.getElementById('gb-location');
+                    const msgInput = document.getElementById('gb-message');
+
+                    const name = nameInput ? nameInput.value.trim() : '';
+                    const location = locInput ? locInput.value.trim() : '';
+                    const message = msgInput ? msgInput.value.trim() : '';
+
+                    if (!name || !message) return;
+
+                    const randomStamp = stampBadges[Math.floor(Math.random() * stampBadges.length)];
+
+                    try {
+                        await addDoc(guestbookColl, {
+                            name,
+                            location: location || 'Worldwide',
+                            message,
+                            stampText: randomStamp.text,
+                            stampClass: randomStamp.class,
+                            userId: currentUser.uid,
+                            createdAt: serverTimestamp()
+                        });
+                        form.reset();
+                    } catch (err) {
+                        console.error("Error adding guestbook entry:", err);
+                    }
+                });
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+    </script>
 </body>
 </html>
