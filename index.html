@@ -925,6 +925,357 @@
                 tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
             );
         }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInAnonymously, 
+            signInWithCustomToken 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            collection, 
+            onSnapshot, 
+            addDoc, 
+            increment,
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const userProvidedConfig = {
+            apiKey: "AIzaSyC6Wzdpm9wKfjTroLa7yyUnshGcx1v_SIU",
+            authDomain: "voteforbaby.firebaseapp.com",
+            projectId: "voteforbaby",
+            storageBucket: "voteforbaby.firebasestorage.app",
+            messagingSenderId: "315841266646",
+            appId: "1:315841266646:web:0373bcef1eb8b96bac1a77",
+            measurementId: "G-6C0G1XTDQW"
+        };
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : userProvidedConfig;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'voteforbaby';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let userId = localStorage.getItem('expedition_user_id');
+        if (!userId) {
+            userId = 'anon_' + Math.random().toString(36).substring(2, 15);
+            localStorage.setItem('expedition_user_id', userId);
+        }
+
+        const cargoData = {
+            1: { name: "Poppy Seed", stats: "~0.1 in / < 0.01 oz" },
+            4: { name: "Sesame Seed", stats: "~0.14 in / < 0.04 oz" },
+            8: { name: "Raspberry", stats: "~0.6 in / 0.04 oz" },
+            12: { name: "Plum", stats: "~2.1 in / 0.5 oz" },
+            16: { name: "Avocado", stats: "~4.6 in / 3.5 oz" },
+            20: { name: "Banana", stats: "~10 in / 10.6 oz" },
+            24: { name: "Cantaloupe", stats: "~11.8 in / 1.3 lbs" },
+            28: { name: "Eggplant", stats: "~14.8 in / 2.2 lbs" },
+            32: { name: "Squash", stats: "~16.7 in / 3.8 lbs" },
+            36: { name: "Honeydew Melon", stats: "~18.6 in / 5.8 lbs" },
+            40: { name: "Watermelon!", stats: "~20.2 in / 7.5 lbs" }
+        };
+
+        let pollState = {
+            boy: 0,
+            girl: 0,
+            voted: false
+        };
+
+        async function startApp() {
+            // Attach UI interactions & event handlers immediately
+            initMobileNav();
+            calculateDueProgress();
+            initPollListeners();
+            initGuestbookFormListener();
+
+            // Authenticate smoothly in the background
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    const userCred = await signInWithCustomToken(auth, __initial_auth_token);
+                    currentUser = userCred.user;
+                    userId = currentUser.uid;
+                } else {
+                    const userCred = await signInAnonymously(auth);
+                    currentUser = userCred.user;
+                    userId = currentUser.uid;
+                }
+            } catch (err) {
+                console.warn("Firebase Auth Note: Continuing with local session ID.", err);
+            }
+
+            // Sync with Firestore collections
+            initPollSync();
+            initGuestbookSync();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startApp);
+        } else {
+            startApp();
+        }
+
+        function initMobileNav() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const links = document.querySelectorAll('.mobile-link');
+
+            if (!btn || !menu) return;
+
+            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+            links.forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
+        }
+
+        function calculateDueProgress() {
+            const dueDate = new Date('2027-04-01T00:00:00');
+            const totalGestationDays = 280;
+            const startDate = new Date(dueDate.getTime() - (totalGestationDays * 24 * 60 * 60 * 1000));
+            const now = new Date();
+
+            const elapsedMs = now - startDate;
+            const elapsedDays = Math.max(0, Math.floor(elapsedMs / (1000 * 60 * 60 * 24)));
+            const remainingDays = Math.max(0, Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24)));
+
+            let week = Math.min(40, Math.max(1, Math.floor(elapsedDays / 7) + 1));
+            let pct = Math.min(100, Math.max(0, Math.round((elapsedDays / totalGestationDays) * 100)));
+
+            const statusText = document.getElementById('flight-status-text');
+            const progressLine = document.getElementById('progress-line');
+            const planeMarker = document.getElementById('plane-marker');
+            const cargoName = document.getElementById('cargo-size-display');
+            const cargoStats = document.getElementById('cargo-stats-display');
+            const daysRemainingDisplay = document.getElementById('days-remaining-display');
+
+            if (statusText) statusText.innerText = `FLIGHT STATUS: ${pct}% EN ROUTE (WEEK ${week})`;
+            if (progressLine) progressLine.style.width = `${pct}%`;
+            if (planeMarker) planeMarker.style.left = `calc(${pct * 0.84}% + 6%)`;
+
+            let selectedKey = 1;
+            const keys = Object.keys(cargoData).map(Number).sort((a,b)=>a-b);
+            for (let k of keys) {
+                if (week >= k) selectedKey = k;
+            }
+
+            const data = cargoData[selectedKey];
+            if (cargoName) cargoName.innerText = data.name;
+            if (cargoStats) cargoStats.innerText = data.stats;
+            if (daysRemainingDisplay) daysRemainingDisplay.innerText = remainingDays > 0 ? `~${remainingDays} Days to Touchdown` : "Touchdown Day!";
+        }
+
+        function updatePollDisplay() {
+            const boyBtn = document.getElementById('vote-boy-btn');
+            const girlBtn = document.getElementById('vote-girl-btn');
+            const boyCountEl = document.getElementById('boy-count');
+            const girlCountEl = document.getElementById('girl-count');
+            const boyPctEl = document.getElementById('boy-pct');
+            const girlPctEl = document.getElementById('girl-pct');
+            const boyBar = document.getElementById('boy-bar');
+            const girlBar = document.getElementById('girl-bar');
+            const thanksMsg = document.getElementById('vote-thanks-msg');
+
+            const total = pollState.boy + pollState.girl;
+            const boyPct = total > 0 ? Math.round((pollState.boy / total) * 100) : 0;
+            const girlPct = total > 0 ? (100 - boyPct) : 0;
+
+            const boyBarWidth = total > 0 ? boyPct : 50;
+            const girlBarWidth = total > 0 ? girlPct : 50;
+
+            if (boyCountEl) boyCountEl.innerText = pollState.boy;
+            if (girlCountEl) girlCountEl.innerText = pollState.girl;
+            if (boyPctEl) boyPctEl.innerText = `${boyPct}%`;
+            if (girlPctEl) girlPctEl.innerText = `${girlPct}%`;
+
+            if (boyBar) boyBar.style.width = `${boyBarWidth}%`;
+            if (girlBar) girlBar.style.width = `${girlBarWidth}%`;
+
+            if (pollState.voted) {
+                if (thanksMsg) thanksMsg.classList.remove('hidden');
+                if (boyBtn) {
+                    boyBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                    boyBtn.disabled = true;
+                }
+                if (girlBtn) {
+                    girlBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                    girlBtn.disabled = true;
+                }
+            }
+        }
+
+        function initPollListeners() {
+            const boyBtn = document.getElementById('vote-boy-btn');
+            const girlBtn = document.getElementById('vote-girl-btn');
+
+            if (localStorage.getItem('voted_gender')) {
+                pollState.voted = true;
+            }
+
+            updatePollDisplay();
+
+            if (boyBtn) {
+                boyBtn.replaceWith(boyBtn.cloneNode(true));
+                document.getElementById('vote-boy-btn').addEventListener('click', () => castVote('boy'));
+            }
+            if (girlBtn) {
+                girlBtn.replaceWith(girlBtn.cloneNode(true));
+                document.getElementById('vote-girl-btn').addEventListener('click', () => castVote('girl'));
+            }
+        }
+
+        async function castVote(gender) {
+            if (pollState.voted) return;
+
+            pollState.voted = true;
+            localStorage.setItem('voted_gender', gender);
+
+            // Immediate local UI update
+            if (gender === 'boy') pollState.boy++;
+            else if (gender === 'girl') pollState.girl++;
+            updatePollDisplay();
+
+            // Save to Firestore asynchronously
+            try {
+                const pollDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'poll', 'totals');
+                const userVoteRef = doc(db, 'artifacts', appId, 'public', 'data', 'votes', userId);
+
+                await setDoc(userVoteRef, { gender, votedAt: serverTimestamp() }, { merge: true });
+                await setDoc(pollDocRef, { [gender]: increment(1) }, { merge: true });
+            } catch (e) {
+                console.warn("Firestore vote saving note:", e);
+            }
+        }
+
+        function initPollSync() {
+            try {
+                const pollDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'poll', 'totals');
+                onSnapshot(pollDocRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.data();
+                        pollState.boy = typeof data.boy === 'number' ? data.boy : 0;
+                        pollState.girl = typeof data.girl === 'number' ? data.girl : 0;
+                        updatePollDisplay();
+                    } else {
+                        setDoc(pollDocRef, { boy: 0, girl: 0 }, { merge: true }).catch(err => console.warn(err));
+                    }
+                }, (err) => {
+                    console.warn("Firestore poll listener note:", err);
+                });
+            } catch (e) {
+                console.warn("Poll sync initialization error:", e);
+            }
+        }
+
+        const stampBadges = [
+            { text: 'PASSED INSPECTION', class: 'border-expedition-stampRed text-expedition-stampRed' },
+            { text: 'PRIORITY BOARDING', class: 'border-expedition-stampBlue text-expedition-stampBlue' },
+            { text: 'APPROVED ENTRY', class: 'border-expedition-sage text-expedition-sage' },
+            { text: 'CO-PILOT APPROVED', class: 'border-expedition-gold text-expedition-gold' }
+        ];
+
+        function initGuestbookFormListener() {
+            const form = document.getElementById('guestbook-form');
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const nameInput = document.getElementById('gb-name');
+                const locInput = document.getElementById('gb-location');
+                const msgInput = document.getElementById('gb-message');
+
+                const name = nameInput ? nameInput.value.trim() : '';
+                const location = locInput ? locInput.value.trim() : '';
+                const message = msgInput ? msgInput.value.trim() : '';
+
+                if (!name || !message) return;
+
+                const randomStamp = stampBadges[Math.floor(Math.random() * stampBadges.length)];
+
+                try {
+                    const guestbookColl = collection(db, 'artifacts', appId, 'public', 'data', 'guestbook');
+                    await addDoc(guestbookColl, {
+                        name,
+                        location: location || 'Worldwide',
+                        message,
+                        stampText: randomStamp.text,
+                        stampClass: randomStamp.class,
+                        userId: userId,
+                        createdAt: serverTimestamp()
+                    });
+                    form.reset();
+                } catch (err) {
+                    console.error("Error writing guestbook entry:", err);
+                    renderGuestbookCard({
+                        name,
+                        location: location || 'Worldwide',
+                        message,
+                        stampText: randomStamp.text,
+                        stampClass: randomStamp.class
+                    }, true);
+                    form.reset();
+                }
+            });
+        }
+
+        function renderGuestbookCard(item, prepend = false) {
+            const list = document.getElementById('guestbook-list');
+            if (!list) return;
+
+            const card = document.createElement('div');
+            card.className = "bg-expedition-sand p-4 rounded-xl border border-expedition-kraft relative shadow-sm";
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <h4 class="font-bold font-serif text-slate-900 text-base">${escapeHTML(item.name || '')}</h4>
+                        <p class="font-mono text-[10px] text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i> ${escapeHTML(item.location || 'Worldwide')}</p>
+                    </div>
+                    <span class="passport-stamp ${item.stampClass || 'border-expedition-sage text-expedition-sage'} text-[10px] py-0.5 px-2 bg-white">
+                        ${escapeHTML(item.stampText || 'APPROVED ENTRY')}
+                    </span>
+                </div>
+                <p class="font-handwriting text-lg text-slate-700">"${escapeHTML(item.message || '')}"</p>
+            `;
+
+            if (prepend) {
+                list.prepend(card);
+            } else {
+                list.appendChild(card);
+            }
+        }
+
+        function initGuestbookSync() {
+            try {
+                const guestbookColl = collection(db, 'artifacts', appId, 'public', 'data', 'guestbook');
+                onSnapshot(guestbookColl, (snapshot) => {
+                    const entries = [];
+                    snapshot.forEach(docSnap => {
+                        entries.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+
+                    entries.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+                    const list = document.getElementById('guestbook-list');
+                    if (list) {
+                        list.innerHTML = '';
+                        entries.forEach(item => renderGuestbookCard(item, false));
+                    }
+                }, (err) => {
+                    console.warn("Guestbook sync note:", err);
+                });
+            } catch (e) {
+                console.warn("Guestbook sync initialization error:", e);
+            }
+        }
+
+        function escapeHTML(str) {
+            return String(str).replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
     </script>
 </body>
 </html>
