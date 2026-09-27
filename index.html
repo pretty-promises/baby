@@ -201,7 +201,7 @@
                         <div class="flex items-center justify-between bg-expedition-sand p-4 rounded-xl border border-expedition-parchment">
                             <div class="text-center sm:text-left">
                                 <p class="font-mono text-xs text-slate-500 uppercase">Origin</p>
-                                <p class="font-serif font-bold text-xl text-expedition-navy">Our Crib</p>
+                                <p class="font-serif font-bold text-xl text-expedition-navy">Matthew & Brenda</p>
                                 <p class="font-mono text-xs text-expedition-terracotta">STATION: TWO</p>
                             </div>
                             <div class="flex flex-col items-center px-2">
@@ -215,7 +215,7 @@
                             </div>
                             <div class="text-center sm:text-right">
                                 <p class="font-mono text-xs text-slate-500 uppercase">Destination</p>
-                                <p class="font-serif font-bold text-xl text-expedition-navy">Their Crib</p>
+                                <p class="font-serif font-bold text-xl text-expedition-navy">Parenthood</p>
                                 <p class="font-mono text-xs text-expedition-sage">STATION: THREE</p>
                             </div>
                         </div>
@@ -224,7 +224,7 @@
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-xs">
                             <div>
                                 <span class="text-slate-400 block uppercase text-[10px]">PASSENGER NAME</span>
-                                <span class="font-bold text-expedition-navy text-sm block truncate" id="ticket-passenger-name">Baby Taylor</span>
+                                <span class="font-bold text-expedition-navy text-sm block truncate" id="ticket-passenger-name">Baby [LastName]</span>
                             </div>
                             <div>
                                 <span class="text-slate-400 block uppercase text-[10px]">FLIGHT NO.</span>
@@ -384,7 +384,7 @@
                 <p class="text-slate-600 text-sm mt-1">Place your bet for Matthew & Brenda's upcoming arrival!</p>
             </div>
 
-             <!-- Vote Buttons Grid -->
+            <!-- Vote Buttons Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-6">
                 <button id="vote-boy-btn" class="p-5 rounded-xl border-2 border-slate-200 hover:border-sky-500 bg-sky-50/50 hover:bg-sky-50 text-slate-800 transition-all flex items-center justify-between group shadow-sm">
                     <div class="flex items-center space-x-3">
@@ -428,6 +428,7 @@
                 </div>
             </div>
         </section>
+
         <!-- SECTION 4: SONOGRAM SIGHTSEEING GALLERY (NO HOVER EFFECTS) -->
         <section id="gallery" class="scroll-mt-20">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6">
@@ -447,7 +448,7 @@
                 <!-- Polaroid Card 1 -->
                 <div class="bg-white p-4 pt-5 rounded-sm polaroid-shadow border border-slate-200">
                     <div class="relative bg-slate-950 aspect-[4/3] rounded overflow-hidden flex items-center justify-center border border-slate-800">
-                        <img src="8weekultrasound.png" alt="Sonogram Scan 1" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=En Route';">
+                        <img src="YOUR_SONOGRAM_IMAGE_URL_HERE.jpg" alt="Sonogram Scan 1" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=Upload+Sonogram+1';">
                     </div>
                     <div class="mt-4 text-center space-y-1">
                         <p class="font-handwriting text-2xl text-slate-800">Stop #1: First Sightings</p>
@@ -458,7 +459,7 @@
                 <!-- Polaroid Card 2 -->
                 <div class="bg-white p-4 pt-5 rounded-sm polaroid-shadow border border-slate-200">
                     <div class="relative bg-slate-950 aspect-[4/3] rounded overflow-hidden flex items-center justify-center border border-slate-800">
-                        <img src="13weekultrasound.jpeg" alt="Sonogram Scan 2" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=Upload+Sonogram+2';">
+                        <img src="YOUR_SONOGRAM_IMAGE_URL_HERE.jpg" alt="Sonogram Scan 2" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=Upload+Sonogram+2';">
                     </div>
                     <div class="mt-4 text-center space-y-1">
                         <p class="font-handwriting text-2xl text-slate-800">Stop #2: The Wave</p>
@@ -469,7 +470,7 @@
                 <!-- Polaroid Card 3 -->
                 <div class="bg-white p-4 pt-5 rounded-sm polaroid-shadow border border-slate-200">
                     <div class="relative bg-slate-950 aspect-[4/3] rounded overflow-hidden flex items-center justify-center border border-slate-800">
-                        <img src="YOUR_SONOGRAM_IMAGE_URL_HERE.jpg" alt="Sonogram Scan 3" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=En Route';">
+                        <img src="YOUR_SONOGRAM_IMAGE_URL_HERE.jpg" alt="Sonogram Scan 3" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x450/111827/9CA3AF?text=Upload+Sonogram+3';">
                     </div>
                     <div class="mt-4 text-center space-y-1">
                         <p class="font-handwriting text-2xl text-slate-800">Stop #3: Halfway Mark</p>
@@ -622,10 +623,17 @@
             increment,
             serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import {
+            getDatabase,
+            ref as rtdbRef,
+            onValue as rtdbOnValue,
+            runTransaction as rtdbRunTransaction
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 
         const userProvidedConfig = {
             apiKey: "AIzaSyC6Wzdpm9wKfjTroLa7yyUnshGcx1v_SIU",
             authDomain: "voteforbaby.firebaseapp.com",
+            databaseURL: "https://voteforbaby-default-rtdb.firebaseio.com/",
             projectId: "voteforbaby",
             storageBucket: "voteforbaby.firebasestorage.app",
             messagingSenderId: "315841266646",
@@ -639,325 +647,9 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
-        let currentUser = null;
-
-        const cargoData = {
-            1: { name: "Poppy Seed", stats: "~0.1 in / < 0.01 oz" },
-            4: { name: "Sesame Seed", stats: "~0.14 in / < 0.04 oz" },
-            8: { name: "Raspberry", stats: "~0.6 in / 0.04 oz" },
-            12: { name: "Plum", stats: "~2.1 in / 0.5 oz" },
-            16: { name: "Avocado", stats: "~4.6 in / 3.5 oz" },
-            20: { name: "Banana", stats: "~10 in / 10.6 oz" },
-            24: { name: "Cantaloupe", stats: "~11.8 in / 1.3 lbs" },
-            28: { name: "Eggplant", stats: "~14.8 in / 2.2 lbs" },
-            32: { name: "Squash", stats: "~16.7 in / 3.8 lbs" },
-            36: { name: "Honeydew Melon", stats: "~18.6 in / 5.8 lbs" },
-            40: { name: "Watermelon!", stats: "~20.2 in / 7.5 lbs" }
-        };
-
-        let pollState = {
-            boy: 0,
-            girl: 0,
-            voted: false
-        };
-
-        async function startApp() {
-            initMobileNav();
-            calculateDueProgress();
-
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    const userCred = await signInWithCustomToken(auth, __initial_auth_token);
-                    currentUser = userCred.user;
-                } else {
-                    const userCred = await signInAnonymously(auth);
-                    currentUser = userCred.user;
-                }
-            } catch (err) {
-                console.error("Firebase auth error:", err);
-            }
-
-            if (currentUser) {
-                initPollSync();
-                initGuestbookSync();
-            } else {
-                initPollFallback();
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', startApp);
-
-        // Mobile Nav Toggle
-        function initMobileNav() {
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            const links = document.querySelectorAll('.mobile-link');
-
-            if (!btn || !menu) return;
-
-            btn.addEventListener('click', () => {
-                menu.classList.toggle('hidden');
-            });
-
-            links.forEach(link => {
-                link.addEventListener('click', () => {
-                    menu.classList.add('hidden');
-                });
-            });
-        }
-
-        // Calculate progress dynamically targeting April 1, 2027
-        function calculateDueProgress() {
-            const dueDate = new Date('2027-04-01T00:00:00');
-            const totalGestationDays = 280; // 40 weeks
-            const startDate = new Date(dueDate.getTime() - (totalGestationDays * 24 * 60 * 60 * 1000));
-            const now = new Date();
-
-            const elapsedMs = now - startDate;
-            const elapsedDays = Math.max(0, Math.floor(elapsedMs / (1000 * 60 * 60 * 24)));
-            const remainingDays = Math.max(0, Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24)));
-
-            let week = Math.min(40, Math.max(1, Math.floor(elapsedDays / 7) + 1));
-            let pct = Math.min(100, Math.max(0, Math.round((elapsedDays / totalGestationDays) * 100)));
-
-            const statusText = document.getElementById('flight-status-text');
-            const progressLine = document.getElementById('progress-line');
-            const planeMarker = document.getElementById('plane-marker');
-
-            const cargoName = document.getElementById('cargo-size-display');
-            const cargoStats = document.getElementById('cargo-stats-display');
-            const daysRemainingDisplay = document.getElementById('days-remaining-display');
-
-            if (statusText) statusText.innerText = `FLIGHT STATUS: ${pct}% EN ROUTE (WEEK ${week})`;
-            if (progressLine) progressLine.style.width = `${pct}%`;
-            if (planeMarker) planeMarker.style.left = `calc(${pct * 0.84}% + 6%)`;
-
-            let selectedKey = 1;
-            const keys = Object.keys(cargoData).map(Number).sort((a,b)=>a-b);
-            for (let k of keys) {
-                if (week >= k) selectedKey = k;
-            }
-
-            const data = cargoData[selectedKey];
-            if (cargoName) cargoName.innerText = data.name;
-            if (cargoStats) cargoStats.innerText = data.stats;
-            if (daysRemainingDisplay) daysRemainingDisplay.innerText = remainingDays > 0 ? `~${remainingDays} Days to Touchdown` : "Touchdown Day!";
-        }
-
-        function updatePollDisplay() {
-            const boyBtn = document.getElementById('vote-boy-btn');
-            const girlBtn = document.getElementById('vote-girl-btn');
-            const boyCountEl = document.getElementById('boy-count');
-            const girlCountEl = document.getElementById('girl-count');
-            const boyPctEl = document.getElementById('boy-pct');
-            const girlPctEl = document.getElementById('girl-pct');
-            const boyBar = document.getElementById('boy-bar');
-            const girlBar = document.getElementById('girl-bar');
-            const thanksMsg = document.getElementById('vote-thanks-msg');
-
-            const total = pollState.boy + pollState.girl;
-            const boyPct = total > 0 ? Math.round((pollState.boy / total) * 100) : 50;
-            const girlPct = total > 0 ? (100 - boyPct) : 50;
-
-            if (boyCountEl) boyCountEl.innerText = pollState.boy;
-            if (girlCountEl) girlCountEl.innerText = pollState.girl;
-            if (boyPctEl) boyPctEl.innerText = `${boyPct}%`;
-            if (girlPctEl) girlPctEl.innerText = `${girlPct}%`;
-
-            if (boyBar) boyBar.style.width = `${boyPct}%`;
-            if (girlBar) girlBar.style.width = `${girlPct}%`;
-
-            if (pollState.voted) {
-                if (thanksMsg) thanksMsg.classList.remove('hidden');
-                if (boyBtn) boyBtn.classList.add('opacity-80', 'cursor-not-allowed');
-                if (girlBtn) girlBtn.classList.add('opacity-80', 'cursor-not-allowed');
-            }
-        }
-
-        function initPollSync() {
-            const boyBtn = document.getElementById('vote-boy-btn');
-            const girlBtn = document.getElementById('vote-girl-btn');
-            if (!boyBtn || !girlBtn) return;
-
-            // Check if user already voted in this browser
-            if (localStorage.getItem('voted_gender')) {
-                pollState.voted = true;
-            }
-
-            // Realtime listener for poll counts
-            const pollDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'poll', 'totals');
-            onSnapshot(pollDocRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    const data = snapshot.data();
-                    pollState.boy = data.boy || 0;
-                    pollState.girl = data.girl || 0;
-                } else {
-                    // Seed initial starting document if empty
-                    setDoc(pollDocRef, { boy: 18, girl: 14 }, { merge: true });
-                    pollState.boy = 18;
-                    pollState.girl = 14;
-                }
-                updatePollDisplay();
-            }, (err) => {
-                console.error("Error loading poll:", err);
-            });
-
-            // Vote Handler
-            const castVote = async (gender) => {
-                if (pollState.voted || !currentUser) return;
-
-                pollState.voted = true;
-                localStorage.setItem('voted_gender', gender);
-                updatePollDisplay();
-
-                try {
-                    // Log individual vote
-                    const userVoteRef = doc(db, 'artifacts', appId, 'public', 'data', 'votes', currentUser.uid);
-                    await setDoc(userVoteRef, { gender, votedAt: serverTimestamp() }, { merge: true });
-
-                    // Increment aggregate poll counter
-                    await setDoc(pollDocRef, { [gender]: increment(1) }, { merge: true });
-                } catch (e) {
-                    console.error("Error saving vote:", e);
-                }
-            };
-
-            boyBtn.addEventListener('click', () => castVote('boy'));
-            girlBtn.addEventListener('click', () => castVote('girl'));
-        }
-
-        function initPollFallback() {
-            pollState.boy = 18;
-            pollState.girl = 14;
-            updatePollDisplay();
-        }
-
-        function initGuestbookSync() {
-            const form = document.getElementById('guestbook-form');
-            const list = document.getElementById('guestbook-list');
-
-            const stampBadges = [
-                { text: 'PASSED INSPECTION', class: 'border-expedition-stampRed text-expedition-stampRed' },
-                { text: 'PRIORITY BOARDING', class: 'border-expedition-stampBlue text-expedition-stampBlue' },
-                { text: 'APPROVED ENTRY', class: 'border-expedition-sage text-expedition-sage' },
-                { text: 'CO-PILOT APPROVED', class: 'border-expedition-gold text-expedition-gold' }
-            ];
-
-            // Realtime listener for guestbook messages
-            const guestbookColl = collection(db, 'artifacts', appId, 'public', 'data', 'guestbook');
-            onSnapshot(guestbookColl, (snapshot) => {
-                const entries = [];
-                snapshot.forEach(docSnap => {
-                    entries.push({ id: docSnap.id, ...docSnap.data() });
-                });
-
-                // Sort in memory by creation time (descending)
-                entries.sort((a, b) => {
-                    const tA = a.createdAt?.seconds || 0;
-                    const tB = b.createdAt?.seconds || 0;
-                    return tB - tA;
-                });
-
-                if (list) {
-                    list.innerHTML = '';
-                    entries.forEach(item => {
-                        const card = document.createElement('div');
-                        card.className = "bg-expedition-sand p-4 rounded-xl border border-expedition-kraft relative shadow-sm";
-                        card.innerHTML = `
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <h4 class="font-bold font-serif text-slate-900 text-base">${escapeHTML(item.name || '')}</h4>
-                                    <p class="font-mono text-[10px] text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i> ${escapeHTML(item.location || 'Worldwide')}</p>
-                                </div>
-                                <span class="passport-stamp ${item.stampClass || 'border-expedition-sage text-expedition-sage'} text-[10px] py-0.5 px-2 bg-white">
-                                    ${escapeHTML(item.stampText || 'APPROVED ENTRY')}
-                                </span>
-                            </div>
-                            <p class="font-handwriting text-lg text-slate-700">"${escapeHTML(item.message || '')}"</p>
-                        `;
-                        list.appendChild(card);
-                    });
-                }
-            }, (err) => {
-                console.error("Guestbook snapshot error:", err);
-            });
-
-            // Submit new passport stamp
-            if (form) {
-                form.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    if (!currentUser) return;
-
-                    const nameInput = document.getElementById('gb-name');
-                    const locInput = document.getElementById('gb-location');
-                    const msgInput = document.getElementById('gb-message');
-
-                    const name = nameInput ? nameInput.value.trim() : '';
-                    const location = locInput ? locInput.value.trim() : '';
-                    const message = msgInput ? msgInput.value.trim() : '';
-
-                    if (!name || !message) return;
-
-                    const randomStamp = stampBadges[Math.floor(Math.random() * stampBadges.length)];
-
-                    try {
-                        await addDoc(guestbookColl, {
-                            name,
-                            location: location || 'Worldwide',
-                            message,
-                            stampText: randomStamp.text,
-                            stampClass: randomStamp.class,
-                            userId: currentUser.uid,
-                            createdAt: serverTimestamp()
-                        });
-                        form.reset();
-                    } catch (err) {
-                        console.error("Error adding guestbook entry:", err);
-                    }
-                });
-            }
-        }
-
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
-        }
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { 
-            getAuth, 
-            signInAnonymously, 
-            signInWithCustomToken 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { 
-            getFirestore, 
-            doc, 
-            setDoc, 
-            collection, 
-            onSnapshot, 
-            addDoc, 
-            increment,
-            serverTimestamp 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const userProvidedConfig = {
-            apiKey: "AIzaSyC6Wzdpm9wKfjTroLa7yyUnshGcx1v_SIU",
-            authDomain: "voteforbaby.firebaseapp.com",
-            projectId: "voteforbaby",
-            storageBucket: "voteforbaby.firebasestorage.app",
-            messagingSenderId: "315841266646",
-            appId: "1:315841266646:web:0373bcef1eb8b96bac1a77",
-            measurementId: "G-6C0G1XTDQW"
-        };
-
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : userProvidedConfig;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'voteforbaby';
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        const rtdb = getDatabase(app);
+        const boyVoteRef = rtdbRef(rtdb, 'votes/boy');
+        const girlVoteRef = rtdbRef(rtdb, 'votes/girl');
 
         let currentUser = null;
         let userId = localStorage.getItem('expedition_user_id');
@@ -1136,33 +828,26 @@
             else if (gender === 'girl') pollState.girl++;
             updatePollDisplay();
 
-            // Save to Firestore asynchronously
+            // Save to Realtime Database (atomic increment, no auth required)
             try {
-                const pollDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'poll', 'totals');
-                const userVoteRef = doc(db, 'artifacts', appId, 'public', 'data', 'votes', userId);
-
-                await setDoc(userVoteRef, { gender, votedAt: serverTimestamp() }, { merge: true });
-                await setDoc(pollDocRef, { [gender]: increment(1) }, { merge: true });
+                const targetRef = gender === 'boy' ? boyVoteRef : girlVoteRef;
+                await rtdbRunTransaction(targetRef, current => (current || 0) + 1);
             } catch (e) {
-                console.warn("Firestore vote saving note:", e);
+                console.warn("Realtime Database vote saving note:", e);
             }
         }
 
         function initPollSync() {
             try {
-                const pollDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'poll', 'totals');
-                onSnapshot(pollDocRef, (snapshot) => {
-                    if (snapshot.exists()) {
-                        const data = snapshot.data();
-                        pollState.boy = typeof data.boy === 'number' ? data.boy : 0;
-                        pollState.girl = typeof data.girl === 'number' ? data.girl : 0;
-                        updatePollDisplay();
-                    } else {
-                        setDoc(pollDocRef, { boy: 0, girl: 0 }, { merge: true }).catch(err => console.warn(err));
-                    }
-                }, (err) => {
-                    console.warn("Firestore poll listener note:", err);
-                });
+                rtdbOnValue(boyVoteRef, (snapshot) => {
+                    pollState.boy = snapshot.val() || 0;
+                    updatePollDisplay();
+                }, (err) => console.warn("Poll (boy) sync note:", err));
+
+                rtdbOnValue(girlVoteRef, (snapshot) => {
+                    pollState.girl = snapshot.val() || 0;
+                    updatePollDisplay();
+                }, (err) => console.warn("Poll (girl) sync note:", err));
             } catch (e) {
                 console.warn("Poll sync initialization error:", e);
             }
