@@ -624,7 +624,7 @@
             const elapsedDays = Math.max(0, Math.floor(elapsedMs / (1000 * 60 * 60 * 24)));
             const remainingDays = Math.max(0, Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24)));
 
-            let week = Math.min(40, Math.max(1, Math.floor(elapsedDays / 7) + 1));
+            let week = Math.min(40, Math.max(0, Math.floor(elapsedDays / 7)));
             let pct = Math.min(100, Math.max(0, Math.round((elapsedDays / totalGestationDays) * 100)));
 
             const statusText = document.getElementById('flight-status-text');
